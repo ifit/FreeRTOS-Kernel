@@ -5440,3 +5440,32 @@ static void prvAddCurrentTaskToDelayedList( TickType_t xTicksToWait,
     #endif
 
 #endif /* if ( configINCLUDE_FREERTOS_TASK_C_ADDITIONS_H == 1 ) */
+
+/**
+ * @brief Function that resets the Task Module Global Variables.
+ */
+void reset_freertos_task_module(void)
+{
+    pxCurrentTCB = NULL;
+    uxCurrentNumberOfTasks = ( UBaseType_t ) 0U;
+    xTickCount = ( TickType_t ) configINITIAL_TICK_COUNT;
+    uxTopReadyPriority = tskIDLE_PRIORITY;
+    xSchedulerRunning = pdFALSE;
+    xPendedTicks = ( TickType_t ) 0U;
+    xYieldPending = pdFALSE;
+    xNumOfOverflows = ( BaseType_t ) 0;
+    uxTaskNumber = ( UBaseType_t ) 0U;
+    xNextTaskUnblockTime = ( TickType_t ) 0U;
+    xIdleTaskHandle = NULL;
+    uxSchedulerSuspended = ( UBaseType_t ) pdFALSE;
+#if ( configGENERATE_RUN_TIME_STATS == 1 )
+    ulTaskSwitchedInTime = 0UL;    /*< Holds the value of a timer/counter the last time a task was switched in. */
+    ulTotalRunTime = 0UL; /*< Holds the total amount of execution time as defined by the run time counter clock. */
+#endif
+#if ( configUSE_POSIX_ERRNO == 1 )
+    FreeRTOS_errno = 0;
+#endif
+#if ( INCLUDE_vTaskDelete == 1 )
+    uxDeletedTasksWaitingCleanUp = ( UBaseType_t ) 0U;
+#endif
+}
