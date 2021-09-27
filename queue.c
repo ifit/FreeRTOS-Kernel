@@ -3073,3 +3073,16 @@ BaseType_t xQueueIsQueueFullFromISR( const QueueHandle_t xQueue )
     }
 
 #endif /* configUSE_QUEUE_SETS */
+
+/**
+ * @brief Function that resets this modules data to as it is initialized;
+ */
+void reset_freertos_queue_module(void)
+{
+#if(0 < configQUEUE_REGISTRY_SIZE)
+	for(UBaseType_t i = 0; i<configQUEUE_REGISTRY_SIZE; i++)
+	{
+		xQueueRegistry[i].pcQueueName = NULL;
+	}
+#endif //(0 < configQUEUE_REGISTRY_SIZE)
+}

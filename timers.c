@@ -1116,4 +1116,14 @@
 /* This entire source file will be skipped if the application is not configured
  * to include software timer functionality.  If you want to include software timer
  * functionality then ensure configUSE_TIMERS is set to 1 in FreeRTOSConfig.h. */
+
+/**
+ * @brief Function that resets the data in this module
+ */
+void reset_freertos_timer_module(void)
+{
+    xTimerQueue = NULL;
+    xTimerTaskHandle = NULL;
+}
+
 #endif /* configUSE_TIMERS == 1 */
