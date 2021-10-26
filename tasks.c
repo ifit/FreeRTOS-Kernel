@@ -5469,3 +5469,11 @@ void reset_freertos_task_module(void)
     uxDeletedTasksWaitingCleanUp = ( UBaseType_t ) 0U;
 #endif
 }
+
+void set_freertos_tick_to_next_start(void)
+{
+    if(xNextTaskUnblockTime > xTickCount)
+    {
+        xTickCount = xNextTaskUnblockTime - 1;
+    }
+}
