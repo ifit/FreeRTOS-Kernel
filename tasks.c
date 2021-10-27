@@ -5653,22 +5653,14 @@ BaseType_t xTaskSetTick( TickType_t desired_tick )
  */
 void set_freertos_tick_to_next_start(void)
 {
-    static const TickType_t min_tick_jump = 5;
-    if(false == xTickJumpAllowed)
+    static const TickType_t min_tick_jump = 2;
+    TickType_t prev_tick;
+    if(portMAX_DELAY == xNextTaskUnblockTime)
     {
         return;
     }
     if((xNextTaskUnblockTime - min_tick_jump) > xTickCount)
     {
-            xTaskSetTick(xNextTaskUnblockTime - 1);
+        xTaskSetTick(xNextTaskUnblockTime - 1);
     }
-}
-
-/**
- * @brief Setts wether the sytem tick is allowed to jump to the next time period
- * @param allowed true to allow, false to disallow.
- */
-void set_time_jump_allowed(bool allowed)
-{
-    xTickJumpAllowed = allowed;
 }
