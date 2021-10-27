@@ -537,7 +537,7 @@
                                         const TickType_t xTimeNow )
     {
         Timer_t * const pxTimer = ( Timer_t * ) listGET_OWNER_OF_HEAD_ENTRY( pxCurrentTimerList ); /*lint !e9087 !e9079 void * is used as this macro is used with tasks and co-routines too.  Alignment is known to be fine as the type of the pointer stored and retrieved is the same. */
-
+        set_time_jump_allowed(false);
         /* Remove the timer from the list of active timers.  A check has already
          * been performed to ensure the list is not empty. */
 
@@ -557,6 +557,7 @@
         /* Call the timer callback. */
         traceTIMER_EXPIRED( pxTimer );
         pxTimer->pxCallbackFunction( ( TimerHandle_t ) pxTimer );
+        set_time_jump_allowed(true);
     }
 /*-----------------------------------------------------------*/
 
