@@ -5654,13 +5654,15 @@ BaseType_t xTaskSetTick( TickType_t desired_tick )
 void set_freertos_tick_to_next_start(void)
 {
     static const TickType_t min_tick_jump = 2;
-    TickType_t prev_tick;
-    if(portMAX_DELAY == xNextTaskUnblockTime)
+    TickType_t unblock_tick;
+
+    unblock_tick = xNextTaskUnblockTime;
+    if(portMAX_DELAY == unblock_tick)
     {
         return;
     }
-    if((xNextTaskUnblockTime - min_tick_jump) > xTickCount)
+    if((unblock_tick - min_tick_jump) > xTickCount)
     {
-        xTaskSetTick(xNextTaskUnblockTime - 1);
+        xTaskSetTick(unblock_tick - 1);
     }
 }
