@@ -5655,14 +5655,19 @@ void set_freertos_tick_to_next_start(void)
 {
     static const TickType_t min_tick_jump = 2;
     TickType_t unblock_tick;
+    TickType_t ff_tick;
 
     unblock_tick = xNextTaskUnblockTime;
     if(portMAX_DELAY == unblock_tick)
     {
         return;
     }
-    if((unblock_tick - min_tick_jump) > xTickCount)
+    if(unblock_tick > min_tick_jump)
     {
-        xTaskSetTick(unblock_tick - 1);
+        ff_tick = unblock_tick - min_tick_jump;
+        if(ff_tick > xTickCount)
+        {
+            xTaskSetTick(ff_tick);
+        }
     }
 }
